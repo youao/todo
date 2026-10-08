@@ -19,7 +19,8 @@
   "packageManager": "pnpm@12.9.1",
   "type": "module",
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "mysql2": "^3.24.5"
   },
   "devDependencies": {
     "prettier": "^3.9.9"
