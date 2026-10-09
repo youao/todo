@@ -2,9 +2,10 @@
   "name": "todo",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "serve": "node src/app.js"
+    "server": "pnpm --filter @app/server dev",
+    "client": "pnpm --filter @app/client dev",
+    "admin": "pnpm --filter @app/admin dev"    
   },
   "keywords": [],
   "author": "",
@@ -18,10 +19,6 @@
   },
   "packageManager": "pnpm@12.9.1",
   "type": "module",
-  "dependencies": {
-    "express": "^5.2.1",
-    "mysql2": "^3.24.5"
-  },
   "devDependencies": {
     "prettier": "^3.9.9"
   }
