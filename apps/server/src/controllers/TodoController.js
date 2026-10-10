@@ -11,17 +11,29 @@ export const list = async (req, res, next) => {
 
 export const create = async (req, res, next) => {
   try {
-    const data = await TodoModel.create();
-    res.json({ code: 0, data });
+    const { title } = req.body;
+    await TodoModel.create(title);
+    res.send(true);
   } catch (err) {
     next(err);
   }
 };
 
-export const update = async (req, res, next) => {
+export const updateTitle = async (req, res, next) => {
   try {
-    const data = await TodoModel.updateTitle();
-    res.json({ code: 0, data });
+    const { id, title } = req.body;
+    const data = await TodoModel.update(id, "title", title);
+    res.send(data);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const completed = async (req, res, next) => {
+  try {
+    const { id } = req.body;
+    const data = await TodoModel.update(id, "is_completed", 1);
+    res.send(data);
   } catch (err) {
     next(err);
   }
@@ -29,8 +41,9 @@ export const update = async (req, res, next) => {
 
 export const deleteItem = async (req, res, next) => {
   try {
-    const data = await TodoModel.deleteItem();
-    res.json({ code: 0, data });
+    const { id } = req.body;
+    const data = await TodoModel.deleteItem(id);
+    res.send(data);
   } catch (err) {
     next(err);
   }

@@ -9,10 +9,13 @@
   "dependencies": {
     "@shared/assets": "workspace:*",
     "@shared/ui": "workspace:*",
+    "axios": "catalog:",
+    "element-plus": "catalog:",
     "vue": "catalog:"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "catalog:",
+    "unocss": "catalog:",
     "vite": "catalog:"
   }
 }
