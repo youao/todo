@@ -2,8 +2,8 @@ import * as TodoModel from "../models/TodoModel.js";
 
 export const list = async (req, res, next) => {
   try {
-    const list = await TodoModel.findAll();
-    res.json({ code: 0, data: list });
+    const data = await TodoModel.findAll(req.query);
+    res.send(data);
   } catch (err) {
     next(err);
   }
@@ -29,10 +29,20 @@ export const updateTitle = async (req, res, next) => {
   }
 };
 
-export const completed = async (req, res, next) => {
+export const setCompleted = async (req, res, next) => {
   try {
-    const { id } = req.body;
-    const data = await TodoModel.update(id, "is_completed", 1);
+    const { id, is_completed } = req.body;
+    const data = await TodoModel.update(id, "is_completed", is_completed);
+    res.send(data);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const setDeleted = async (req, res, next) => {
+  try {
+    const { id, is_deleted } = req.body;
+    const data = await TodoModel.update(id, "is_deleted", is_deleted);
     res.send(data);
   } catch (err) {
     next(err);
