@@ -2,7 +2,7 @@ import TodoRouter from "./todo.js";
 
 const routes = [
   {
-    path: "/todo",
+    path: "/api/todo",
     router: TodoRouter,
   },
 ];

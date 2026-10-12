@@ -5,6 +5,7 @@
   "scripts": {
     "server": "pnpm --filter @app/server dev",
     "client": "pnpm --filter @app/client dev",
+    "client:build": "pnpm --filter @app/client build",
     "admin": "pnpm --filter @app/admin dev"    
   },
   "keywords": [],

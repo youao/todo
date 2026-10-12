@@ -11,7 +11,8 @@
     "@shared/ui": "workspace:*",
     "axios": "catalog:",
     "element-plus": "catalog:",
-    "vue": "catalog:"
+    "vue": "catalog:",
+    "vue-router": "catalog:"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "catalog:",

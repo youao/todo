@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <h1>Hello Todo Admin</h1>
-  </div>
+  <router-view></router-view>
 </template>
 
 <script setup></script>
