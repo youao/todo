@@ -1,9 +1,14 @@
 import TodoRouter from "./todo.js";
+import UserRouter from "./user.js";
 
 const routes = [
   {
     path: "/api/todo",
     router: TodoRouter,
+  },
+  {
+    path: "/api/user",
+    router: UserRouter,
   },
 ];
 

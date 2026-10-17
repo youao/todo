@@ -2,19 +2,19 @@
   <div class="h-100vh flex flex-col">
     <div class="flex items-center pt-5 px-5">
       <div class="flex-1">
-        <span class="text-3xl font-600">Todo</span>
+        <el-checkbox
+          v-model="isDeleted"
+          label="回收站"
+          :true-value="1"
+          :false-value="0"
+          border
+          @change="switchIsDeleted"
+        />
+        <el-button class="mx-2" type="primary" @click="openDialog()"
+          >添加</el-button
+        >
       </div>
-      <el-button class="mx-2" type="primary" @click="openDialog()"
-        >添加</el-button
-      >
-      <el-checkbox
-        v-model="isDeleted"
-        label="回收站"
-        :true-value="1"
-        :false-value="0"
-        border
-        @change="switchIsDeleted"
-      />
+      <el-button class="mx-2" @click="logout">退出登录</el-button>
     </div>
     <div class="px-5">
       <el-tabs v-model="tabIsCompleted" @tab-change="handleTab">
@@ -101,7 +101,18 @@
 
 <script setup>
 import { ref } from "vue";
-import axios from "axios";
+import { useRouter } from "vue-router";
+import {
+  getTodoList,
+  postTodoCreate,
+  postTodoUpdateTitle,
+  postTodoCompleted,
+  postTodoDeleted,
+} from "../apis/todo";
+import useUserStore from "../stores/user";
+
+const router = useRouter();
+const userStore = useUserStore();
 
 const tabIsCompleted = ref("");
 const isDeleted = ref(0);
@@ -111,26 +122,24 @@ const pageSize = 10;
 const total = ref(0);
 
 const getList = () => {
-  axios
-    .get("/api/todo/list", {
-      params: {
-        page: page.value,
-        page_size: pageSize,
-        is_deleted: isDeleted.value,
-        is_completed: tabIsCompleted.value,
-      },
-    })
-    .then((res) => {
-      list.value = res.data.list;
-      total.value = res.data.total;
-    });
+  getTodoList({
+    page: page.value,
+    page_size: pageSize,
+    is_deleted: isDeleted.value,
+    is_completed: tabIsCompleted.value,
+  }).then((res) => {
+    list.value = res.data.list;
+    total.value = res.data.total;
+  });
 };
 
 const switchIsDeleted = () => {
+  page.value = 1;
   getList();
 };
 
 const handleTab = () => {
+  page.value = 1;
   getList();
 };
 
@@ -156,58 +165,46 @@ const closeDialog = () => {
 const handleCreate = () => {
   if (!title.value) return;
   if (!currentId.value) {
-    axios
-      .post("/api/todo/create", {
-        title: title.value,
-      })
-      .then((res) => {
-        if (res.data) {
-          closeDialog();
-          getList();
-        }
-      });
+    postTodoCreate(title.value).then((res) => {
+      if (res.data) {
+        closeDialog();
+        getList();
+      }
+    });
   } else {
-    axios
-      .post("/api/todo/updateTitle", {
-        id: currentId.value,
-        title: title.value,
-      })
-      .then((res) => {
-        if (res.data) {
-          closeDialog();
-          getList();
-        }
-      });
+    postTodoUpdateTitle(currentId.value, title.value).then((res) => {
+      if (res.data) {
+        closeDialog();
+        getList();
+      }
+    });
   }
 };
 
 const handleCompleted = (item) => {
   const { id, is_completed } = item;
-  axios
-    .post("/api/todo/setCompleted", {
-      id,
-      is_completed,
-    })
-    .then((res) => {
-      if (res.data) {
-        getList();
-      }
-    });
+  postTodoCompleted(id, is_completed).then((res) => {
+    if (res.data) {
+      getList();
+    }
+  });
 };
 
 const setDeleteItem = (id, is_deleted) => {
-  axios
-    .post("/api/todo/setDeleted", {
-      id,
-      is_deleted,
-    })
-    .then((res) => {
-      if (res.data) {
-        getList();
-      }
-    });
+  postTodoDeleted(id, is_deleted).then((res) => {
+    if (res.data) {
+      getList();
+    }
+  });
+};
+
+const logout = () => {
+  userStore.logout();
+  setTimeout(() => {
+    router.push("/login");
+  }, 500);
 };
 
 getList();
+userStore.getUserInfo();
 </script>
-

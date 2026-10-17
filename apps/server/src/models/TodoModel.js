@@ -14,20 +14,20 @@ export const findAll = async (params) => {
     "SELECT COUNT(*) AS total FROM todo " + whereSql,
     [1],
   );
-  return {
-    list: rows,
-    total,
-  };
+  return [
+    null,
+    {
+      list: rows,
+      total,
+    },
+  ];
 };
 
 export const create = async (title) => {
   const [result] = await pool.query("INSERT INTO todo (title) VALUES (?)", [
     title,
   ]);
-  return {
-    id: result.insertId,
-    title,
-  };
+  return [null, result.insertId];
 };
 
 export const update = async (id, name, value) => {
@@ -35,10 +35,10 @@ export const update = async (id, name, value) => {
     "UPDATE todo SET " + name + " = ? WHERE id = ?",
     [value, id],
   );
-  return true;
+  return [null, true];
 };
 
 export const deleteItem = async (id) => {
   const [result] = await pool.query("DELETE FROM todo WHERE id = ?", [id]);
-  return true;
+  return [null, true];
 };

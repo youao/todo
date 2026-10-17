@@ -1,7 +1,54 @@
 <template>
-  <div>
-    <h1>login</h1>
+  <div class="pt-30vh">
+    <div
+      class="w-4/5 max-w-400px mx-a p-5 border-1 border-solid border-gray-300 rounded box-border"
+    >
+      <div class="text-2xl font-600 mb-5">登录</div>
+      <el-input v-model="phone" class="mb-5" placeholder="手机号"></el-input>
+      <el-input
+        v-model="pwd"
+        class="mb-5"
+        placeholder="密码"
+        type="password"
+      ></el-input>
+      <el-button class="w-full mb-2" type="primary" @click="login"
+        >登录</el-button
+      >
+      <div class="text-center">
+        <router-link to="/register">
+          <el-link>没有账号？立即注册</el-link>
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { postLogin } from "../apis/user";
+import useUserStore from "../stores/user";
+
+const route = useRoute();
+const router = useRouter();
+const userStore = useUserStore();
+
+const phone = ref("");
+const pwd = ref("");
+const loading = ref(false);
+
+const login = async () => {
+  if (!phone.value || !pwd.value || loading.value) return;
+  loading.value = true;
+  try {
+    const res = await postLogin(phone.value, pwd.value);
+    const { token } = res.data;
+    await userStore.login(token);
+    const { redirect = "/" } = route.query;
+    setTimeout(() => {
+      router.push(decodeURIComponent(redirect));
+    }, 1500);
+  } catch (err) {}
+  loading.value = false;
+};
+</script>
