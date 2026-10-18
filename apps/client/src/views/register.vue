@@ -12,7 +12,7 @@
         type="password"
       ></el-input>
       <el-button class="w-full mb-2" type="primary" @click="login"
-        >登录</el-button
+        >注册</el-button
       >
       <div class="text-center">
         <el-link @click="tologin">已有账号？立即登录</el-link>
@@ -25,11 +25,11 @@
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { postRegister } from "../apis/user";
-import useUserStore from "../stores/user";
+import { ElMessage } from "element-plus";
+import { sleep } from "@shared/utils";
 
 const route = useRoute();
 const router = useRouter();
-const userStore = useUserStore();
 
 const phone = ref("");
 const pwd = ref("");
@@ -40,9 +40,9 @@ const login = async () => {
   loading.value = true;
   try {
     await postRegister(phone.value, pwd.value);
-    setTimeout(() => {
-      router.push("/login");
-    }, 1500);
+    ElMessage.success("注册成功");
+    await sleep(1000);
+    tologin();
   } catch (err) {}
   loading.value = false;
 };

@@ -103,7 +103,7 @@ import {
   postTodoCompleted,
   postTodoDeleted,
 } from "../apis/todo";
-import { ElMessageBox } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 
 const tabIsCompleted = ref("0");
 const isDeleted = ref(0);
@@ -153,23 +153,17 @@ const closeDialog = () => {
   dialogVisible.value = false;
 };
 
-const handleCreate = () => {
+const handleCreate = async () => {
   if (!title.value) return;
   if (!currentId.value) {
-    postTodoCreate(title.value).then((res) => {
-      if (res.data) {
-        closeDialog();
-        getList();
-      }
-    });
+    await postTodoCreate(title.value);
+    ElMessage.success("添加成功");
   } else {
-    postTodoUpdateTitle(currentId.value, title.value).then((res) => {
-      if (res.data) {
-        closeDialog();
-        getList();
-      }
-    });
+    await postTodoUpdateTitle(currentId.value, title.value);
+    ElMessage.success("操作成功");
   }
+  closeDialog();
+  getList();
 };
 
 const handleCompleted = (item) => {

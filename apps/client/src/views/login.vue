@@ -26,6 +26,8 @@ import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { postLogin } from "../apis/user";
 import useUserStore from "../stores/user";
+import { ElMessage } from "element-plus";
+import { sleep } from "@shared/utils";
 
 const route = useRoute();
 const router = useRouter();
@@ -42,10 +44,10 @@ const login = async () => {
     const res = await postLogin(phone.value, pwd.value);
     const { token } = res.data;
     await userStore.login(token);
+    ElMessage.success("登录成功");
+    await sleep(1000);
     const { redirect = "/" } = route.query;
-    setTimeout(() => {
-      router.push(decodeURIComponent(redirect));
-    }, 1500);
+    router.push(decodeURIComponent(redirect));
   } catch (err) {}
   loading.value = false;
 };

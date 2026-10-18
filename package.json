@@ -24,6 +24,7 @@
     "prettier": "^3.9.9"
   },
   "dependencies": {
+    "@shared/utils": "workspace:*",
     "dayjs": "catalog:"
   }
 }
