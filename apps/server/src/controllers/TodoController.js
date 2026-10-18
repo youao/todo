@@ -2,7 +2,9 @@ import * as TodoModel from "../models/TodoModel.js";
 
 export const list = async (req, res, next) => {
   try {
-    const [err, data] = await TodoModel.findAll(req.query);
+    const uid = req.authUid;
+    const params = { ...req.query, uid };
+    const [err, data] = await TodoModel.findAll(params);
     res.json({
       code: 200,
       data,

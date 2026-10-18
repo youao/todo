@@ -1,11 +1,12 @@
 import pool from "../config/db.js";
 
 export const findAll = async (params) => {
-  const { is_deleted = 0, is_completed, page = 1, page_size = 10 } = params;
+  const { is_deleted = 0, is_completed, page = 1, page_size = 10, uid } = params;
   let whereSql = "WHERE is_deleted = " + is_deleted;
   if (is_completed == "0" || is_completed == "1") {
     whereSql += " AND is_completed = " + is_completed;
   }
+  whereSql += " AND uid = " + uid;
   const offset = (page - 1) * page_size;
   const sql =
     "SELECT * FROM todo " + whereSql + " ORDER BY id DESC LIMIT ? OFFSET ?";
