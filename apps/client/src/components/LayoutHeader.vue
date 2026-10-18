@@ -12,6 +12,7 @@
 import { computed } from "vue";
 import { useRouter } from "vue-router";
 import useUserStore from "../stores/user";
+import { ElMessageBox } from "element-plus";
 
 const router = useRouter();
 
@@ -25,9 +26,13 @@ const name = computed(() => {
 });
 
 const logout = () => {
-  userStore.logout();
-  setTimeout(() => {
-    router.push("/login");
-  }, 500);
+  ElMessageBox.confirm("确认退出登录吗？", "退出登录", {
+    type: "warning",
+  }).then(() => {
+    userStore.logout();
+    setTimeout(() => {
+      router.push("/login");
+    }, 500);
+  });
 };
 </script>

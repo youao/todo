@@ -103,6 +103,7 @@ import {
   postTodoCompleted,
   postTodoDeleted,
 } from "../apis/todo";
+import { ElMessageBox } from "element-plus";
 
 const tabIsCompleted = ref("0");
 const isDeleted = ref(0);
@@ -177,7 +178,12 @@ const handleCompleted = (item) => {
 };
 
 const setDeleteItem = (id, is_deleted) => {
-  postTodoDeleted(id, is_deleted).then(() => getList());
+  ElMessageBox.confirm("删除后可前往回收站恢复", "确认删除吗？", {
+    confirmButtonText: "确认删除",
+    type: "warning",
+  }).then(() => {
+    postTodoDeleted(id, is_deleted).then(() => getList());
+  });
 };
 
 getList();
