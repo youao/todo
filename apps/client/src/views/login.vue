@@ -15,9 +15,7 @@
         >登录</el-button
       >
       <div class="text-center">
-        <router-link to="/register">
-          <el-link>没有账号？立即注册</el-link>
-        </router-link>
+        <el-link @click="toRegister">没有账号？立即注册</el-link>
       </div>
     </div>
   </div>
@@ -50,5 +48,12 @@ const login = async () => {
     }, 1500);
   } catch (err) {}
   loading.value = false;
+};
+
+const toRegister = () => {
+  router.push({
+    path: "/register",
+    query: route.query,
+  });
 };
 </script>

@@ -15,9 +15,7 @@
         >登录</el-button
       >
       <div class="text-center">
-        <router-link to="/login">
-          <el-link>已有账号？立即登录</el-link>
-        </router-link>
+        <el-link @click="tologin">已有账号？立即登录</el-link>
       </div>
     </div>
   </div>
@@ -47,5 +45,12 @@ const login = async () => {
     }, 1500);
   } catch (err) {}
   loading.value = false;
+};
+
+const tologin = () => {
+  router.push({
+    path: "/login",
+    query: route.query,
+  });
 };
 </script>
