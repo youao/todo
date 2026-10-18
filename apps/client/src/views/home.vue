@@ -1,33 +1,17 @@
 <template>
-  <div class="h-100vh flex flex-col">
-    <div class="flex items-center pt-5 px-5">
-      <div class="flex-1">
-        <el-checkbox
-          v-model="isDeleted"
-          label="回收站"
-          :true-value="1"
-          :false-value="0"
-          border
-          @change="switchIsDeleted"
-        />
-        <el-button class="mx-2" type="primary" @click="openDialog()"
-          >添加</el-button
-        >
-      </div>
-      <el-button class="mx-2" @click="logout">退出登录</el-button>
-    </div>
+  <div class="h-layout-content flex flex-col overflow-hidden">
     <div class="px-5">
       <el-tabs v-model="tabIsCompleted" @tab-change="handleTab">
-        <el-tab-pane label="全部" name="" />
         <el-tab-pane label="未完成" name="0" />
         <el-tab-pane label="已完成" name="1" />
+        <el-tab-pane label="全部" name="" />
       </el-tabs>
     </div>
     <el-scrollbar class="flex-1 overflow-hidden px-5">
       <div
         v-for="item in list"
         :key="item.id"
-        class="flex items-baseline py-4 border-b-1 border-b-solid border-gray-200"
+        class="flex items-baseline py-4 border-b-1 border-b-gray-200"
       >
         <el-checkbox
           v-model="item.is_completed"
@@ -65,9 +49,20 @@
 
       <el-empty v-if="!list.length" description="暂无数据~" />
     </el-scrollbar>
-    <div
-      class="flex justify-center mx-5 py-4 border-t-1 border-t-solid border-gray-300"
-    >
+    <div class="flex items-center mx-5 py-4 border-t-1 border-t-gray-300">
+      <div class="flex-1">
+        <el-checkbox
+          v-model="isDeleted"
+          label="回收站"
+          :true-value="1"
+          :false-value="0"
+          border
+          @change="switchIsDeleted"
+        />
+        <el-button class="mx-2" type="primary" @click="openDialog()"
+          >添加</el-button
+        >
+      </div>
       <el-pagination
         v-model:current-page="page"
         :page-size="pageSize"
@@ -101,7 +96,6 @@
 
 <script setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
 import {
   getTodoList,
   postTodoCreate,
@@ -109,12 +103,8 @@ import {
   postTodoCompleted,
   postTodoDeleted,
 } from "../apis/todo";
-import useUserStore from "../stores/user";
 
-const router = useRouter();
-const userStore = useUserStore();
-
-const tabIsCompleted = ref("");
+const tabIsCompleted = ref("0");
 const isDeleted = ref(0);
 const list = ref([]);
 const page = ref(1);
@@ -183,28 +173,12 @@ const handleCreate = () => {
 
 const handleCompleted = (item) => {
   const { id, is_completed } = item;
-  postTodoCompleted(id, is_completed).then((res) => {
-    if (res.data) {
-      getList();
-    }
-  });
+  postTodoCompleted(id, is_completed).then(() => getList());
 };
 
 const setDeleteItem = (id, is_deleted) => {
-  postTodoDeleted(id, is_deleted).then((res) => {
-    if (res.data) {
-      getList();
-    }
-  });
-};
-
-const logout = () => {
-  userStore.logout();
-  setTimeout(() => {
-    router.push("/login");
-  }, 500);
+  postTodoDeleted(id, is_deleted).then(() => getList());
 };
 
 getList();
-userStore.getUserInfo();
 </script>

@@ -1,16 +1,25 @@
 import { createWebHistory, createRouter } from "vue-router";
+import Layout from "../views/layout.vue";
+import Home from "../views/home.vue";
+import Login from "../views/login.vue";
 
 const { VITE_TOKEN_NAME } = import.meta.env;
 
 const routes = [
   {
     path: "/",
-    component: () => import("../views/home.vue"),
+    component: () => Layout,
     meta: {
       auth: true,
     },
+    children: [
+      {
+        path: "/",
+        component: () => Home,
+      },
+    ],
   },
-  { path: "/login", component: () => import("../views/login.vue") },
+  { path: "/login", component: Login },
   { path: "/register", component: () => import("../views/register.vue") },
 ];
 
