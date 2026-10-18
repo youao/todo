@@ -172,12 +172,16 @@ const handleCompleted = (item) => {
 };
 
 const setDeleteItem = (id, is_deleted) => {
-  ElMessageBox.confirm("删除后可前往回收站恢复", "确认删除吗？", {
-    confirmButtonText: "确认删除",
-    type: "warning",
-  }).then(() => {
-    postTodoDeleted(id, is_deleted).then(() => getList());
-  });
+  if (is_deleted === 1) {
+    ElMessageBox.confirm("删除后可前往回收站恢复", "确认删除吗？", {
+      confirmButtonText: "确认删除",
+      type: "warning",
+    }).then(() => {
+      postTodoDeleted(id, is_deleted).then(() => getList());
+    });
+  } else {
+    postTodoDeleted(id, 0).then(() => getList());
+  }
 };
 
 getList();
