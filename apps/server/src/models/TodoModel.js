@@ -24,9 +24,9 @@ export const findAll = async (params) => {
   ];
 };
 
-export const create = async (title) => {
-  const [result] = await pool.query("INSERT INTO todo (title) VALUES (?)", [
-    title,
+export const create = async (title, uid) => {
+  const [result] = await pool.query("INSERT INTO todo (title, uid) VALUES (?, ?)", [
+    title, uid
   ]);
   return [null, result.insertId];
 };
