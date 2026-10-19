@@ -1,1 +1,12 @@
-Todo
+- [x] Pnpm Monorepo项目构建：server+client+admin
+- [x] Todo应用CURD
+- [ ] 用户鉴权
+    - [x] 登录注册
+    - [ ] 后台权限分配
+- [ ] 错误拦截处理
+- [ ] 错误日志
+- [ ] 一键打包发布
+- [ ] 数据埋点分析
+- [ ] Ts配置
+- [ ] TsOrm
+- [ ] Eslint配置
