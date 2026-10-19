@@ -1,8 +1,12 @@
 <template>
-  <div class="h-10 px-5 flex items-center justify-between">
-    <div>Todo</div>
+  <div class="h-10 px-5 flex items-center justify-between bg-white">
+    <router-link to="/">
+      <el-link>Todo</el-link>
+    </router-link>
     <div v-if="isLogin">
-      <el-link>{{ name }}</el-link>
+      <router-link to="/user">
+        <el-link>{{ name }}</el-link>
+      </router-link>
       <el-link class="ml-2" @click="logout">退出登录</el-link>
     </div>
   </div>

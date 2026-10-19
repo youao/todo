@@ -16,3 +16,5 @@ catalog:
   nodemon: ^3.1.14
   body-parser: ^2.3.0
   dayjs: ^1.11.23
+  '@iconify-json/ep': ^1.2.4
+  '@unocss/preset-icons': ^66.11.0

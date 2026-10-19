@@ -1,5 +1,5 @@
 <template>
-  <div class="h-layout-content flex flex-col overflow-hidden">
+  <div class="h-layout-content flex flex-col overflow-hidden bg-white">
     <div class="px-5">
       <el-tabs v-model="tabIsCompleted" @tab-change="handleTab">
         <el-tab-pane label="未完成" name="0" />

@@ -23,8 +23,7 @@ instance.interceptors.response.use(
     if (!data?.code) return response;
     if (data.code === 200) return data;
     if (data.code === 401) {
-      const userStore = useUserStore();
-      userStore.logout();
+      useUserStore().logout();
     }
     return Promise.reject(data);
   },
