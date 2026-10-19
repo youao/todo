@@ -31,7 +31,7 @@ import { sleep } from "@shared/utils";
 import { ElMessage } from "element-plus";
 
 const { VITE_HTTP_HOST } = import.meta.env;
-const baseUrl = VITE_HTTP_HOST + "/uploads/";
+const baseUrl = VITE_HTTP_HOST + "/uploads/avatar/";
 const avatarUrls = [
   "yuanshen (1).jpeg",
   "yuanshen (1).jpg",
