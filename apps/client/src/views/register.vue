@@ -1,7 +1,7 @@
 <template>
   <div class="pt-30vh">
     <div
-      class="w-4/5 max-w-400px mx-a p-5 border-1 border-solid border-gray-300 rounded box-border"
+      class="w-4/5 max-w-400px mx-a p-5 border-1 border-solid border-gray-300 rounded box-border bg-white"
     >
       <div class="text-2xl font-600 mb-5">注册</div>
       <el-input v-model="phone" class="mb-5" placeholder="手机号"></el-input>

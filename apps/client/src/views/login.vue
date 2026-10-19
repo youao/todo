@@ -1,7 +1,7 @@
 <template>
   <div class="pt-30vh">
     <div
-      class="w-4/5 max-w-400px mx-a p-5 border-1 border-solid border-gray-300 rounded box-border"
+      class="w-4/5 max-w-400px mx-a p-5 border-1 border-solid border-gray-300 rounded box-border bg-white"
     >
       <div class="text-2xl font-600 mb-5">登录</div>
       <el-input v-model="phone" class="mb-5" placeholder="手机号"></el-input>
@@ -38,7 +38,12 @@ const pwd = ref("");
 const loading = ref(false);
 
 const login = async () => {
-  if (!phone.value || !pwd.value || loading.value) return;
+  if (loading.value) return;
+  if (!phone.value || phone.value.length !== 11 || isNaN(phone.value)) {
+    return ElMessage.warning("请输入正确格式手机号");
+  }
+  if (!pwd.value) return ElMessage.warning("请输入密码");
+
   loading.value = true;
   try {
     const res = await postLogin(phone.value, pwd.value);
@@ -48,7 +53,9 @@ const login = async () => {
     await sleep(1000);
     const { redirect = "/" } = route.query;
     router.push(decodeURIComponent(redirect));
-  } catch (err) {}
+  } catch (err) {
+    ElMessage.error(err?.message || err);
+  }
   loading.value = false;
 };
 
