@@ -12,16 +12,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 installRoutes(app);
 
 const publicDir = path.resolve("public");
-
 app.use(express.static(publicDir));
+app.use("/uploads", express.static("uploads"));
+
 app.use((req, res, next) => {
   if (req.method !== "GET") return next();
   if (req.path.startsWith("/api/")) return next();
   if (!req.accepts("html")) return next();
   if (req.path.startsWith("/admin/")) {
-    const a = path.join(publicDir, "admin/index.html")
-    console.log("admin");
-    console.log( a);
     res.sendFile(path.join(publicDir, "admin/index.html"));
   } else {
     res.sendFile(path.join(publicDir, "index.html"));

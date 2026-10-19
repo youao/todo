@@ -80,7 +80,7 @@
         <el-input v-model="title"></el-input>
       </div>
       <template #footer>
-        <div class="dialog-footer">
+        <div>
           <el-button @click="closeDialog">取消</el-button>
           <el-button v-if="currentId" type="primary" @click="handleCreate">
             立即提交

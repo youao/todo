@@ -67,3 +67,63 @@ export const info = async (req, res, next) => {
     next(err);
   }
 };
+
+export const updateNickname = async (req, res, next) => {
+  try {
+    const uid = req.authUid;
+    if (!uid) {
+      return res.json({
+        code: 400,
+        message: "auth failed",
+      });
+    }
+    const { nickname } = req.body;
+    if (!nickname) {
+      return res.json({
+        code: 400,
+        message: "miss nickname",
+      });
+    }
+    const [err, data] = await UserModel.update(uid, "nickname", nickname);
+    if (err) {
+      return res.json(err);
+    }
+
+    res.json({
+      code: 200,
+      data,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const updateAvatar = async (req, res, next) => {
+  try {
+    const uid = req.authUid;
+    if (!uid) {
+      return res.json({
+        code: 400,
+        message: "auth failed",
+      });
+    }
+    const { avatar } = req.body;
+    if (!avatar) {
+      return res.json({
+        code: 400,
+        message: "miss avatar",
+      });
+    }
+    const [err, data] = await UserModel.update(uid, "avatar", avatar);
+    if (err) {
+      return res.json(err);
+    }
+
+    res.json({
+      code: 200,
+      data,
+    });
+  } catch (err) {
+    next(err);
+  }
+};

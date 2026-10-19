@@ -39,3 +39,11 @@ export const findByPhone = async (phone) => {
 
   return [null, rows[0]];
 };
+
+export const update = async (id, name, value) => {
+  const [result] = await pool.query(
+    "UPDATE user SET " + name + " = ? WHERE id = ?",
+    [value, id],
+  );
+  return [null, true];
+};

@@ -17,3 +17,15 @@ export const postRegister = (phone, pwd) => {
 export const getUser = () => {
   return http.get("user/info");
 };
+
+export const postUpdateNickname = (nickname) => {
+  return http.post("user/updateNickname", {
+    nickname,
+  });
+};
+
+export const postUpdateAvatar = (avatar) => {
+  return http.post("user/updateAvatar", {
+    avatar,
+  });
+};
