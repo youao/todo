@@ -9,7 +9,7 @@ export const register = async (req, res, next) => {
     if (err) {
       return res.json(err);
     }
-    res.json({ code: 200 });
+    res.success();
   } catch (err) {
     next(err);
   }
@@ -25,10 +25,7 @@ export const login = async (req, res, next) => {
 
     const pwdMd5 = crypto.createHash("md5").update(pwd).digest("hex");
     if (pwdMd5 !== user.pwd) {
-      return res.json({
-        code: 400,
-        message: "password error",
-      });
+      return res.failed("password error");
     }
 
     const [errLogin, resLogin] = await LoginModel.uidToToken(user.id);
@@ -36,10 +33,7 @@ export const login = async (req, res, next) => {
       return res.json(errLogin);
     }
 
-    res.json({
-      code: 200,
-      data: resLogin,
-    });
+    res.success(resLogin);
   } catch (err) {
     next(err);
   }
@@ -49,20 +43,14 @@ export const info = async (req, res, next) => {
   try {
     const uid = req.authUid;
     if (!uid) {
-      return res.json({
-        code: 400,
-        message: "auth failed",
-      });
+      return res.failed("auth failed");
     }
     const [err, user] = await UserModel.findById(uid);
     if (err) {
       return res.json(err);
     }
 
-    res.json({
-      code: 200,
-      data: user,
-    });
+    res.success(user);
   } catch (err) {
     next(err);
   }
@@ -72,27 +60,18 @@ export const updateNickname = async (req, res, next) => {
   try {
     const uid = req.authUid;
     if (!uid) {
-      return res.json({
-        code: 400,
-        message: "auth failed",
-      });
+      return res.failed("auth failed");
     }
     const { nickname } = req.body;
     if (!nickname) {
-      return res.json({
-        code: 400,
-        message: "miss nickname",
-      });
+      return res.failed("miss nickname");
     }
     const [err, data] = await UserModel.update(uid, "nickname", nickname);
     if (err) {
       return res.json(err);
     }
 
-    res.json({
-      code: 200,
-      data,
-    });
+    res.success(data);
   } catch (err) {
     next(err);
   }
@@ -102,27 +81,18 @@ export const updateAvatar = async (req, res, next) => {
   try {
     const uid = req.authUid;
     if (!uid) {
-      return res.json({
-        code: 400,
-        message: "auth failed",
-      });
+      return res.failed("auth failed");
     }
     const { avatar } = req.body;
     if (!avatar) {
-      return res.json({
-        code: 400,
-        message: "miss avatar",
-      });
+      return res.failed("miss avatar");
     }
     const [err, data] = await UserModel.update(uid, "avatar", avatar);
     if (err) {
       return res.json(err);
     }
 
-    res.json({
-      code: 200,
-      data,
-    });
+    res.success(data);
   } catch (err) {
     next(err);
   }

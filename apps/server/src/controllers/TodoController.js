@@ -5,10 +5,7 @@ export const list = async (req, res, next) => {
     const uid = req.authUid;
     const params = { ...req.query, uid };
     const [err, data] = await TodoModel.findAll(params);
-    res.json({
-      code: 200,
-      data,
-    });
+    res.success(data);
   } catch (err) {
     next(err);
   }
@@ -16,11 +13,10 @@ export const list = async (req, res, next) => {
 
 export const create = async (req, res, next) => {
   try {
+    const uid = req.authUid;
     const { title } = req.body;
-    await TodoModel.create(title);
-    res.json({
-      code: 200,
-    });
+    await TodoModel.create(title, uid);
+    res.success();
   } catch (err) {
     next(err);
   }
@@ -29,10 +25,8 @@ export const create = async (req, res, next) => {
 export const updateTitle = async (req, res, next) => {
   try {
     const { id, title } = req.body;
-    const data = await TodoModel.update(id, "title", title);
-    res.json({
-      code: 200,
-    });
+    await TodoModel.update(id, "title", title);
+    res.success();
   } catch (err) {
     next(err);
   }
@@ -41,10 +35,8 @@ export const updateTitle = async (req, res, next) => {
 export const setCompleted = async (req, res, next) => {
   try {
     const { id, is_completed } = req.body;
-    const data = await TodoModel.update(id, "is_completed", is_completed);
-    res.json({
-      code: 200,
-    });
+    await TodoModel.update(id, "is_completed", is_completed);
+    res.success();
   } catch (err) {
     next(err);
   }
@@ -53,10 +45,8 @@ export const setCompleted = async (req, res, next) => {
 export const setDeleted = async (req, res, next) => {
   try {
     const { id, is_deleted } = req.body;
-    const data = await TodoModel.update(id, "is_deleted", is_deleted);
-    res.json({
-      code: 200,
-    });
+    await TodoModel.update(id, "is_deleted", is_deleted);
+    res.success();
   } catch (err) {
     next(err);
   }
@@ -65,10 +55,8 @@ export const setDeleted = async (req, res, next) => {
 export const deleteItem = async (req, res, next) => {
   try {
     const { id } = req.body;
-    const data = await TodoModel.deleteItem(id);
-    res.json({
-      code: 200,
-    });
+    await TodoModel.deleteItem(id);
+    res.success();
   } catch (err) {
     next(err);
   }

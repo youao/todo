@@ -2,12 +2,15 @@ import express from "express";
 import bodyParser from "body-parser";
 import installRoutes from "./routes/routes.js";
 import path from "node:path";
+import sendJson from "./middlewares/SendJsonMilldleware.js";
 
 const app = express();
 const port = 3000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(sendJson);
 
 installRoutes(app);
 
