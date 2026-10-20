@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+}
+
+div {
+  border: 0 solid transparent;
+}
+
+i {
+  display: inline-block;
+}
+
+.el-link {
+  --el-link-text-color: var(--el-text-color-primary);
+}

@@ -11,10 +11,13 @@
     "@shared/ui": "workspace:*",
     "axios": "catalog:",
     "element-plus": "catalog:",
+    "pinia": "catalog:",
     "vue": "catalog:",
     "vue-router": "catalog:"
   },
   "devDependencies": {
+    "@iconify-json/ep": "catalog:",
+    "@unocss/preset-icons": "catalog:",
     "@vitejs/plugin-vue": "catalog:",
     "unocss": "catalog:",
     "vite": "catalog:"
